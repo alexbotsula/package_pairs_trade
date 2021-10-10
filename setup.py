@@ -8,5 +8,6 @@ setup(
     packages=['pairs_trade'],
     install_requires=['pandas', 'numpy', 'statsmodels'],
     license='MIT',
-    description=''
+    description='',
+    version='0.0.6'
 )

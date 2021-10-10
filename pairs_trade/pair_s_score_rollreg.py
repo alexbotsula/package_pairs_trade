@@ -6,7 +6,7 @@ import statsmodels.api as sm
 
 
 
-class pair_beta_rollreg:
+class PairBetaRollreg:
     def __init__(self):
         self._mod = None
         return
@@ -22,7 +22,7 @@ class pair_beta_rollreg:
 
 
 
-class pair_ou_residuals:
+class PairOUResiduals:
     def __init__(self):
         self._m = None
         self._var = None
@@ -61,14 +61,14 @@ class pair_ou_residuals:
 
 
 
-class pair_s_score_rollreg:
+class PairSScoreRollreg:
     def __init__(self, window_size):
         self._asset1 = deque(maxlen=window_size+1)
         self._asset2 = deque(maxlen=window_size+1)
         self._window_size = window_size
 
-        self._beta = pair_beta_rollreg()
-        self._ou = pair_ou_residuals()
+        self._beta = PairBetaRollreg()
+        self._ou = PairOUResiduals()
 
         self._sscore = None
 
@@ -97,3 +97,10 @@ class pair_s_score_rollreg:
             return 0
            
         return self._sscore.iloc[-1]
+
+    @property 
+    def beta(self):
+        if len(self._asset1) < self._window_size + 1:
+            return None
+        
+        return list(self._beta._mod.params)[1]
